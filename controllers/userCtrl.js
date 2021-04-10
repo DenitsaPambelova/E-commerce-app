@@ -49,9 +49,27 @@ const userCtrl = {
             if(!isMatch) return res.status(400).json({msg: "Incorrect password"})
 
             // If login success, create access token and refresh token
+            const accesstoken = createAccessToken({id: user._id})
+            const refreshtoken = createRefreshToken({id: user._id})
 
-            res.json({msg: "Login success!"})
+            res.cookie('refreshtoken', refreshtoken, {
+                httpOnly: true,
+                path: '/user/refresh_token',
+                //maxAge: 7*24*60*60*1000 // 7d
+            })
 
+            res.json({accesstoken})
+
+            // res.json({msg: "Login success!"})
+
+        }catch(err){
+            return res.status(500).json({msg: err.message})
+        }
+    },
+    logout: async(req,res)=>{
+        try{
+            res.clearCookie('refreshtoken',{path:'/user/refresh_token'})
+            return res.json({msg: "Logged out!"})
         }catch(err){
             return res.status(500).json({msg: err.message})
         }
@@ -74,6 +92,17 @@ const userCtrl = {
         }
 
     },
+    getUser: async (req,res)=>{
+        try{
+            const user= await Users.findById(req.user.id).select('-password')
+            if(!user) return res.status(400).json({msg: "User does not exist."})
+
+            res.json(user)
+
+        }catch(err){
+            return res.status(500).json({msg: err.message})
+        }
+    }
 }
 
 const createAccessToken = (user) =>{
