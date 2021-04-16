@@ -14,6 +14,12 @@ app.use(fileUpload({
     useTempFiles:true
 }))
 
+//Routes
+
+app.use('/user', require('./routes/userRouter'))
+app.use('/api', require('./routes/categoryRouter'))
+app.use('/api', require('./routes/upload'))
+
 // Connect to mongodb
 
 const URI = process.env.MONGODB_URL
@@ -31,10 +37,7 @@ app.get('/',(req,res)=>{
     res.json({msg: 'Welcome!!!'})
 })
 
-//Routes
 
-app.use('/user', require('./routes/userRouter'))
-app.use('/api', require('./routes/categoryRouter'))
 
 const PORT= process.env.PORT || 5000
 app.listen(PORT,()=>{
