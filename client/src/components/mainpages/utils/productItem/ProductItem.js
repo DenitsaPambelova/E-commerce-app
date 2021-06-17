@@ -1,6 +1,5 @@
 import React,{useContext} from 'react';
-import {GlobalState} from "../../../../GlobalState";
-import Link from 'react-router-dom'
+import {Link} from 'react-router-dom';
 
 function ProductItem({product}) {
     return (
@@ -9,7 +8,7 @@ function ProductItem({product}) {
             <div className="product-box">
                 <h2 title={product.title} > {product.title}
                     <span>${product.price}</span>
-                    <span>${product.description}</span>
+                    <span>{product.description}</span>
                 </h2>
             </div>
             <div className="row_btn">
