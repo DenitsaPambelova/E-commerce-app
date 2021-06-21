@@ -2,6 +2,11 @@
 @import url("./components/headers/header.css");
 /*Products*/
 @import url("./components/mainpages/products/products.css");
+/* Details Product */
+@import url("./components/mainpages/DetailProduct/detailProduct.css");
+/* ---Login/Register-----*/
+@import url("./components/mainpages/auth/login.css");
+
 
 * {
   padding: 0;
